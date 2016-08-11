@@ -17,17 +17,19 @@ public class ImageChooserActivity extends AppCompatActivity implements ImageChoo
         imageChooserDialog.setListener(ImageChooserActivity.this);
         imageChooserDialog.setChooserType(ImageChooserDialog.CHOOSER_TYPE_MULTIPLE);
         // imageChooserDialog.setChooserType(ImageChooserDialog.CHOOSER_TYPE_SINGLE);
+        // imageChooserDialog.setTitleText("Choose Image");
+        // imageChooserDialog.setDoneText("Done");
         imageChooserDialog.show(getSupportFragmentManager(), imageChooserDialog.getTag());
         ...
     }
 
     @Override
-    public void doneSelect(List<String> images) {
+    public void doneSelect(List<String> imagePaths) {
         // you can get a list of image paths of user's choice
     }
 
     @Override
-    public void cameraCaptureSuccess(Bitmap photo) {
+    public void cameraCaptureSuccess(Bitmap photoBitmap) {
         // you can get the bitmap of what the camera take directly.
         // when this been called, dialog would not be dismissed because
         // the photo would show in dialog for user to choose. 

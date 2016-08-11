@@ -6,19 +6,19 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/iup_toolbar"
+        android:id="@+id/icd_toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp">
 
         <ImageView
-            android:id="@+id/iup_dismiss_button"
+            android:id="@+id/icd_dismiss_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="@dimen/dp_padding_normal"
             android:src="@drawable/ic_clear_black_24dp" />
 
         <TextView
-            android:id="@+id/iup_title"
+            android:id="@+id/icd_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/dp_padding_normal"
@@ -33,7 +33,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/iup_done_button"
+            android:id="@+id/icd_done_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <Spinner
-        android:id="@+id/iup_folder_spinner"
+        android:id="@+id/icd_folder_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#f5f5f5"
@@ -54,7 +54,7 @@
         android:paddingStart="@dimen/dp_margin_normal_half" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/iup_image_recycler_view"
+        android:id="@+id/icd_image_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="GridLayoutManager" />

@@ -45,12 +45,12 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
     public static final int CHOOSER_TYPE_SINGLE = 0412;
     public static final int CHOOSER_TYPE_MULTIPLE = 0413;
 
-    private ImageView iupDismissButton;
-    private TextView iupTitle;
-    private TextView iupDoneButton;
-    private Spinner iupFolderSpinner;
+    private ImageView icdDismissButton;
+    private TextView icdTitleTextView;
+    private TextView icdDoneButton;
+    private Spinner icdFolderSpinner;
 
-    private ImageRecyclerAdapter iupAdapter;
+    private ImageRecyclerAdapter icdAdapter;
     private OnImageChooserListener OnImageChooserListener;
 
     private Map<String, List<String>> groupImages = new HashMap<>();
@@ -62,12 +62,20 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
 
     }
 
+    public void setListener(OnImageChooserListener listener) {
+        this.OnImageChooserListener = listener;
+    }
+
     public void setChooserType(@ChooserType int type) {
         this.chooserType = type;
     }
 
-    public void setListener(OnImageChooserListener listener) {
-        this.OnImageChooserListener = listener;
+    public void setTitleText(String titleText) {
+        this.icdTitleTextView.setText(titleText);
+    }
+
+    public void setDoneText(String doneText) {
+        this.icdDoneButton.setText(doneText);
     }
 
     @Nullable
@@ -77,23 +85,23 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
         View rootView = View.inflate(getContext(), R.layout.fragment_image_chooser, null);
         int imageColumns = 3;
 
-        iupTitle = (TextView) rootView.findViewById(R.id.iup_title);
-        iupDoneButton = (TextView) rootView.findViewById(R.id.iup_done_button);
-        iupFolderSpinner = (Spinner) rootView.findViewById(R.id.iup_folder_spinner);
-        iupDismissButton = (ImageView) rootView.findViewById(R.id.iup_dismiss_button);
-        RecyclerView iupRecyclerView = (RecyclerView) rootView.findViewById(R.id.iup_image_recycler_view);
+        icdTitleTextView = (TextView) rootView.findViewById(R.id.icd_title);
+        icdDoneButton = (TextView) rootView.findViewById(R.id.icd_done_button);
+        icdFolderSpinner = (Spinner) rootView.findViewById(R.id.icd_folder_spinner);
+        icdDismissButton = (ImageView) rootView.findViewById(R.id.icd_dismiss_button);
+        RecyclerView icdRecyclerView = (RecyclerView) rootView.findViewById(R.id.icd_image_recycler_view);
 
-        iupRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), imageColumns));
-        iupAdapter = new ImageRecyclerAdapter(getContext(), this);
-        iupAdapter.setData(getImagesPath(getContext()));
-        iupAdapter.setMode(chooserType);
-        iupRecyclerView.setAdapter(iupAdapter);
-        iupDismissButton.setOnClickListener(this);
-        iupDoneButton.setOnClickListener(this);
+        icdRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), imageColumns));
+        icdAdapter = new ImageRecyclerAdapter(getContext(), this);
+        icdAdapter.setData(getImagesPath(getContext()));
+        icdAdapter.setMode(chooserType);
+        icdRecyclerView.setAdapter(icdAdapter);
+        icdDismissButton.setOnClickListener(this);
+        icdDoneButton.setOnClickListener(this);
         FolderSpinnerAdapter folderSpinnerAdapter = new FolderSpinnerAdapter(getContext());
         folderSpinnerAdapter.setFolders(folderNames);
-        iupFolderSpinner.setAdapter(folderSpinnerAdapter);
-        iupFolderSpinner.setOnItemSelectedListener(this);
+        icdFolderSpinner.setAdapter(folderSpinnerAdapter);
+        icdFolderSpinner.setOnItemSelectedListener(this);
         dialog.setContentView(rootView);
         return dialog;
     }
@@ -133,7 +141,7 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
     }
 
     public List<String> getSelectedImagesPath() {
-        return iupAdapter.getSelectedImages();
+        return icdAdapter.getSelectedImages();
     }
 
     private void dispatchTakePictureIntent() {
@@ -145,13 +153,11 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.iup_dismiss_button) {
+        if (view.getId() == R.id.icd_dismiss_button) {
             dismiss();
-        } else if (view.getId() == R.id.iup_done_button) {
+        } else if (view.getId() == R.id.icd_done_button) {
             if (OnImageChooserListener != null) {
-                OnImageChooserListener.doneSelect(getSelectedImagesPath());
-                //iupAdapter.setData(getImagesPath(getContext()));
-
+                OnImageChooserListener.onDoneClicked(getSelectedImagesPath());
                 dismiss();
             } else {
                 throw new RuntimeException("have you forget to implement onImageChooserListener");
@@ -165,9 +171,9 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             if (OnImageChooserListener != null) {
-                OnImageChooserListener.cameraCaptureSuccess(imageBitmap);
+                OnImageChooserListener.onCameraCaptureSuccess(imageBitmap);
                 getImagesPath(getContext());
-                iupAdapter.setData(groupImages.get(folderNames.get(selected)));
+                icdAdapter.setData(groupImages.get(folderNames.get(selected)));
             } else {
                 throw new RuntimeException("have you forget to implement onImageChooserListener");
             }
@@ -181,7 +187,7 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        iupAdapter.setData(groupImages.get(folderNames.get(i)));
+        icdAdapter.setData(groupImages.get(folderNames.get(i)));
         selected = i;
     }
 
@@ -191,20 +197,8 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
     }
 
     public interface OnImageChooserListener {
-        void doneSelect(List<String> images);
+        void onDoneClicked(List<String> imagePaths);
 
-        void cameraCaptureSuccess(Bitmap photo);
-    }
-
-    private void setCheckboxColor(int color) {
-        iupAdapter.setCheckBoxColor(color);
-    }
-
-    public void setDoneText(String doneText) {
-        this.iupDoneButton.setText(doneText);
-    }
-
-    public void setTitleText(String titleText) {
-        this.iupTitle.setText(titleText);
+        void onCameraCaptureSuccess(Bitmap photoBitmap);
     }
 }

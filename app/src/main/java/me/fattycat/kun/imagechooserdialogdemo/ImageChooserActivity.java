@@ -56,12 +56,12 @@ public class ImageChooserActivity extends AppCompatActivity implements ImageChoo
     }
 
     @Override
-    public void doneSelect(List<String> images) {
-        imageRecyclerAdapter.setData(images);
+    public void onDoneClicked(List<String> imagePaths) {
+        imageRecyclerAdapter.setData(imagePaths);
     }
 
     @Override
-    public void cameraCaptureSuccess(Bitmap photo) {
-        imageChooserPhoto.setImageBitmap(photo);
+    public void onCameraCaptureSuccess(Bitmap photoBitmap) {
+        imageChooserPhoto.setImageBitmap(photoBitmap);
     }
 }
