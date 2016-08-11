@@ -21,7 +21,7 @@ public class ImageChooserActivity extends AppCompatActivity implements ImageChoo
     private ImageView imageChooserPhoto;
     private RecyclerView imageChooserRecyclerView;
     private ImageChooserRecyclerAdapter imageRecyclerAdapter;
-    ImageChooserDialog imageChooserDialog;
+    private ImageChooserDialog imageChooserDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
