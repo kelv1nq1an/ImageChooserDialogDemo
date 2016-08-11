@@ -3,7 +3,7 @@ Another image chooser dialog which uses BottomSheetDialogFragment.
 
 ## Usage
 
-```
+``` java
 public class ImageChooserActivity extends AppCompatActivity implements ImageChooserDialog.OnImageChooserListener {
 
     private ImageChooserDialog imageChooserDialog;
