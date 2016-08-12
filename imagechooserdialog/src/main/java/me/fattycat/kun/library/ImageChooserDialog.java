@@ -57,6 +57,9 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
     private List<String> folderNames = new ArrayList<>();
     private int selected = 0;
     private int chooserType = CHOOSER_TYPE_SINGLE;
+    private int imageColumns = 3;
+    private String titleText = "选择图片";
+    private String doneText = "完成";
 
     public ImageChooserDialog() {
 
@@ -71,11 +74,15 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
     }
 
     public void setTitleText(String titleText) {
-        this.icdTitleTextView.setText(titleText);
+        this.titleText = titleText;
     }
 
     public void setDoneText(String doneText) {
-        this.icdDoneButton.setText(doneText);
+        this.doneText = doneText;
+    }
+
+    public void setImageColumns(int columns) {
+        this.imageColumns = columns;
     }
 
     @Nullable
@@ -83,7 +90,6 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         View rootView = View.inflate(getContext(), R.layout.fragment_image_chooser, null);
-        int imageColumns = 3;
 
         icdTitleTextView = (TextView) rootView.findViewById(R.id.icd_title);
         icdDoneButton = (TextView) rootView.findViewById(R.id.icd_done_button);
@@ -102,6 +108,8 @@ public class ImageChooserDialog extends BottomSheetDialogFragment implements Vie
         folderSpinnerAdapter.setFolders(folderNames);
         icdFolderSpinner.setAdapter(folderSpinnerAdapter);
         icdFolderSpinner.setOnItemSelectedListener(this);
+        icdTitleTextView.setText(titleText);
+        icdDoneButton.setText(doneText);
         dialog.setContentView(rootView);
         return dialog;
     }

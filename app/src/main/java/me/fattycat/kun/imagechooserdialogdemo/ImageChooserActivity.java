@@ -37,6 +37,8 @@ public class ImageChooserActivity extends AppCompatActivity implements ImageChoo
             @Override
             public void onClick(View view) {
                 imageChooserDialog.setChooserType(ImageChooserDialog.CHOOSER_TYPE_MULTIPLE);
+                imageChooserDialog.setTitleText("选择图片");
+                imageChooserDialog.setDoneText("完成");
                 imageChooserDialog.show(getSupportFragmentManager(), imageChooserDialog.getTag());
             }
         });
