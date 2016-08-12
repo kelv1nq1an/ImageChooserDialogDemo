@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ImageUploadDialog</string>
+    <string name="app_name">ImageChooserDialog</string>
     <string name="choose_image">Choose Image</string>
     <string name="done">Done</string>
 </resources>
