@@ -4,7 +4,7 @@ Another image chooser dialog which uses BottomSheetDialogFragment.
 
 
 ## Usage
-1. In your dependencies, add `compile 'me.fattycat.kun:imagechooserdialog:1.0.0'`
+1. In your dependencies, add `compile 'me.fattycat.kun:imagechooserdialog:1.0.1'`
 2. follow the example below
 
 ``` java
@@ -37,6 +37,7 @@ public class ImageChooserActivity extends AppCompatActivity implements ImageChoo
         // you can get the bitmap of what the camera take directly.
         // when this been called, dialog would not be dismissed because
         // the photo would show in dialog for user to choose. 
+        // you can mannuly call imageChooserDialog.dismiss() to dismiss the dialog.
     }
 }
 
